@@ -136,7 +136,7 @@ public class Stack<T> implements StackInterface<T>, ExpressionEvaluatorInterface
 
                 if (operators.isEmpty()) {
                     throw new IllegalArgumentException(
-                        "Mismatched parentheses."
+                        "The parenthesis are not matched correctly!!"
                     );
                 }
 
@@ -159,7 +159,7 @@ public class Stack<T> implements StackInterface<T>, ExpressionEvaluatorInterface
 
             else {
                 throw new IllegalArgumentException(
-                    "Invalid character: " + current
+                    "This character is not valid: " + current
                 );
             }
 
@@ -171,7 +171,7 @@ public class Stack<T> implements StackInterface<T>, ExpressionEvaluatorInterface
 
             if (operators.peek() == '(') {
                 throw new IllegalArgumentException(
-                    "Mismatched parentheses."
+                    "The parenthesis are not matched correctly!!"
                 );
             }
 
@@ -203,7 +203,7 @@ public class Stack<T> implements StackInterface<T>, ExpressionEvaluatorInterface
 
                 if (numbers.size() < 2) {
                     throw new IllegalArgumentException(
-                        "Invalid postfix expression."
+                        "This postfix expression does not make sense."
                     );
                 }
 
@@ -212,29 +212,25 @@ public class Stack<T> implements StackInterface<T>, ExpressionEvaluatorInterface
 
                 int result = 0;
 
-                switch (token.charAt(0)) {
+                if (token.charAt(0) == '+') {
+                    result = left + right;
+                }
 
-                    case '+':
-                        result = left + right;
-                        break;
+                else if (token.charAt(0) == '-') {
+                    result = left - right;
+                }
 
-                    case '-':
-                        result = left - right;
-                        break;
+                else if (token.charAt(0) == '*') {
+                    result = left * right;
+                }
 
-                    case '*':
-                        result = left * right;
-                        break;
+                else if (token.charAt(0) == '/') {
 
-                    case '/':
-                        if (right == 0) {
-                            throw new ArithmeticException(
-                                "Cannot divide by zero."
-                            );
-                        }
+                    if (right == 0) {
+                        throw new ArithmeticException("Cannot divide by zero.");
+                    }
 
-                        result = left / right;
-                        break;
+                    result = left / right;
                 }
 
                 numbers.push(result);
@@ -242,7 +238,7 @@ public class Stack<T> implements StackInterface<T>, ExpressionEvaluatorInterface
 
             else {
                 throw new IllegalArgumentException(
-                    "Invalid postfix token: " + token
+                    "Wrong postfix token: " + token
                 );
             }
         }
@@ -250,7 +246,7 @@ public class Stack<T> implements StackInterface<T>, ExpressionEvaluatorInterface
         // A valid expression should leave exactly one value
         if (numbers.size() != 1) {
             throw new IllegalArgumentException(
-                "Invalid postfix expression."
+                "Wrong postfix expression."
             );
         }
 
